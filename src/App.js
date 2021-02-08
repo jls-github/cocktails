@@ -1,66 +1,69 @@
 import './App.css';
 import React, { Component } from 'react';
+
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import FormControl from 'react-bootstrap/FormControl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faGlassMartiniAlt} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faGlassMartiniAlt} from '@fortawesome/free-solid-svg-icons';
 import logo from './images/logo.jpg';
-import {BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import Login from './components/Login';
-import About from './components/about';
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
+import FormCom from './components/FormCom';
+import About from './components/About';
+import Contact from './components/Contact';
+import NavRouter from './components/NavRouter'
+import Layout from './components/Layout';
+import { render } from '@testing-library/react';
 
+ const axios = require('axios');
 
-function App() {
+// initializing Axios Instance
+const api = axios.create({
+  baseURL: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
+})
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      drinks: []
+    };
+  }
+
+    //   // The componentDidMount() method runs after the component output has been rendered to the DOM.
+componentDidMount() {
+  api.get('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+  .then(res => {
+    const drinks = res.data.drinks
+   console.log(res.data)
+   console.log(drinks);
+   this.setState({ drinks });
+  });
+}
+   
+  render() {
   return (
-    // <div className="App">
-    //   <div>
-      <Router>
-        <Navbar className="navHeader">
-        
-          <Navbar.Brand className="navStyle" href="#home">  
-          <img src={logo} alt="martini glass" />
+    <div>
+      <NavRouter />
+      <FormCom /> 
+      <Layout />
 
-          </Navbar.Brand >
-          <Nav className="ml-auto">
-            <Link className="navStyle" to="/">Home</Link>
-            <Link className="navStyle" to="/about">About</Link>
-            <Link className="navStyle" to="/login">Login</Link>
-          </Nav>
-       </Navbar>
-          <Route path="/"></Route>
-          <Route path="/about"><About /></Route>
-          <Route path="/login"><Login /></Route>
-    </Router>
-       //<br />
-       //</div>
-      
-  )
-    function Form() {
-      return(
-        <div>
-      
-      
-          <form className="formbox">
-            <div className="formlayout">
-              
-              <label className="formstyle">
-                <h3>search your favorite cocktail</h3>
-                
+      {this.state.drinks.map(drink => <p key={drink.idDrink}>{drink.strDrink}</p>)}
+    </div>
+        );
+      }
+}
+   
+   
+  export default App;
 
-              </label>
-               <p><input className="formcolor" type="text" name="name" id="name"></input></p>
-              
-            </div>
-          </form>
-      
-       </div>
-       //</div>
-      )  
-  }}
 
-export default App;
