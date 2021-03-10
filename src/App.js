@@ -21,10 +21,12 @@ import FormCom from './components/FormCom';
 import About from './components/About';
 import Contact from './components/Contact';
 import NavRouter from './components/NavRouter'
-import Layout from './components/Layout';
+import Layout from './components/Card';
+import Card from './components/Card';
 import { render } from '@testing-library/react';
 
  const axios = require('axios');
+ 
 
 // initializing Axios Instance
 const api = axios.create({
@@ -35,7 +37,9 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      drinks: []
+      drinks: {
+        name: 'strDrink'
+      }
     };
   }
 
@@ -51,13 +55,15 @@ componentDidMount() {
 }
    
   render() {
+    const {drinks} = this.state;
   return (
     <div>
       <NavRouter />
       <FormCom /> 
       <Layout />
+      <Card drinks={drinks} />
 
-      {this.state.drinks.map(drink => <p key={drink.idDrink}>{drink.strDrink}</p>)}
+     
     </div>
         );
       }
