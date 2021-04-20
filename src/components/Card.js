@@ -36,9 +36,11 @@ class Cards extends Component {
     };
       console.log('Testing My Code');
            
-      const {drinks} = this.props;
-      const {name} = drinks.strDrink
-      console.log(name);
+      // const {drinks} = this.props;
+      // const {name} = drinks.strDrink
+      // console.log(name);
+
+      // console log each piece of data and then drill down. Make sure you know what data you have
       
     
     return (
@@ -49,7 +51,7 @@ class Cards extends Component {
            <Card style={{ width: '18rem' }} >
               <Card.Img variant="top" src="https://www.thecocktaildb.com/images/media/drink/2x8thr1504816928.jpg"></Card.Img>
               <Card.Body>
-              <Card.Title><h2>{this.props.name}</h2></Card.Title>
+              {/* <Card.Title><h2>{this.props.name}</h2></Card.Title> Props should be an array, not an object*/}
               <Card.Text><h3>Cocktail glass</h3></Card.Text> 
               <Button variant="primary" id='button' onClick={handleClick}>Details</Button>
               </Card.Body>
